@@ -81,6 +81,9 @@ class _BlogPageState extends State<BlogPage> {
     if (confirm == true) {
       await _blogService.deleteBlog(id);
       setState(() => _blogs.removeWhere((b) => b.id == id));
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Blog deleted!')));
     }
   }
 
