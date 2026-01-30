@@ -4,13 +4,22 @@ import 'package:blogsite/pages/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: ".env");
+  if (!kIsWeb) {
+    await dotenv.load(fileName: ".env");
+  }
 
-  final String url = dotenv.env['SUPABASE_URL'] ?? '';
-  final String key = dotenv.env['SUPABASE_KEY'] ?? '';
+  final String url = kIsWeb
+      ? const String.fromEnvironment('SUPABASE_URL')
+      : dotenv.env['SUPABASE_URL'] ?? '';
+
+  final String key = kIsWeb
+      ? const String.fromEnvironment('SUPABASE_KEY')
+      : dotenv.env['SUPABASE_KEY'] ?? '';
 
   await Supabase.initialize(url: url, anonKey: key);
   runApp(const MyApp());
