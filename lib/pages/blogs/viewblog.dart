@@ -1,8 +1,6 @@
 import 'dart:io';
 import 'package:blogsite/entities/blogs.dart';
 import 'package:blogsite/entities/comments.dart';
-import 'package:blogsite/pages/blog_layout.dart';
-import 'package:blogsite/pages/blogs/blogpage.dart';
 import 'package:blogsite/services/blogService.dart';
 import 'package:blogsite/services/commentservice.dart';
 import 'package:flutter/foundation.dart';
