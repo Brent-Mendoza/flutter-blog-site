@@ -16,4 +16,6 @@ flutter config --enable-web
 flutter pub get
 
 # Build for web
-flutter build web --release --verbose
+flutter build web --release \
+  --dart-define=SUPABASE_URL="$SUPABASE_URL" \
+  --dart-define=SUPABASE_KEY="$SUPABASE_KEY"
