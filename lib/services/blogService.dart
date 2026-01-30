@@ -27,6 +27,39 @@ class Blogservice {
     return response.map<Blogs>((e) => Blogs.fromMap(e)).toList();
   }
 
+  Future<Blogs> fetchBlog(int id) async {
+    final response = await _db
+        .select('''
+          id,
+          title,
+          content,
+          image_url
+          ''')
+        .eq("id", id)
+        .single();
+
+    return Blogs.fromMapPartial(response);
+  }
+
+  Future<Blogs> viewBlog(int id) async {
+    final response = await _db
+        .select('''
+          id,
+          title,
+          content,
+          user_id,
+          image_url,
+          created_at,
+          updated_at,
+          profiles:profiles!inner(username, profileImage),
+          comments(count)
+          ''')
+        .eq("id", id)
+        .single();
+
+    return Blogs.fromMap(response);
+  }
+
   Future<void> updateBlog(
     int id,
     String title,
@@ -38,9 +71,10 @@ class Blogservice {
           "title": title,
           "content": content,
           "image_url": imageUrl,
-          "updated_at": DateTime.now(),
+          "updated_at": DateTime.now().toIso8601String(),
         })
-        .eq("id", id);
+        .eq("id", id)
+        .select();
 
     if (res.isEmpty) {
       throw Exception('Blog not found.');
@@ -48,7 +82,7 @@ class Blogservice {
   }
 
   Future<void> deleteBlog(int id) async {
-    final res = await _db.delete().eq("id", id);
+    final res = await _db.delete().eq("id", id).select();
 
     if (res.isEmpty) {
       throw Exception('Blog not found or already deleted');

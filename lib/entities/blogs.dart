@@ -38,12 +38,31 @@ class Blogs {
     );
   }
 
+  factory Blogs.fromMapPartial(Map<String, dynamic> map) {
+    return Blogs(
+      id: map['id'],
+      title: map['title'],
+      content: map['content'],
+      user_id: map['user_id'] ?? '',
+      image_url: map['image_url'] ?? '',
+      created_at: map['created_at'] != null
+          ? DateTime.parse(map['created_at'])
+          : DateTime.now(),
+      updated_at: map['updated_at'] != null
+          ? DateTime.parse(map['updated_at'])
+          : DateTime.now(),
+      commentCount: 0,
+      username: '',
+      profile_images: null,
+    );
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'title': title,
       'content': content,
-      'created_at': created_at,
-      'updated_at': updated_at,
+      'created_at': created_at.toIso8601String(),
+      'updated_at': updated_at.toIso8601String(),
       'user_id': user_id,
       'image_url': image_url,
     };
