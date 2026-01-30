@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter/foundation.dart';
-import 'dart:html' as html;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,9 +19,6 @@ void main() async {
   final String key = kIsWeb
       ? const String.fromEnvironment('SUPABASE_KEY')
       : dotenv.env['SUPABASE_KEY'] ?? '';
-
-  html.window.console.log('SUPABASE_URL = $url');
-  html.window.console.log('SUPABASE_KEY = $key');
 
   await Supabase.initialize(url: url, anonKey: key);
   runApp(const MyApp());
