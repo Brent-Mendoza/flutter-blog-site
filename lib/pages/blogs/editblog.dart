@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:blogsite/entities/blogs.dart';
-import 'package:blogsite/services/blogService.dart';
+import 'package:blogsite/services/blogservice.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
